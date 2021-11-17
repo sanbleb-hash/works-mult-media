@@ -40,7 +40,8 @@ const Contact = () => {
             name
           </label>
           <input
-            className="text-gray-700 "
+            className="text-gray-700
+            border-blue-300  border-0 border-b-2  "
             required
             type="text"
             placeholder="enter your name"
@@ -52,7 +53,8 @@ const Contact = () => {
             subject
           </label>
           <input
-            className="text-gray-700 "
+            className="text-gray-700
+            border-blue-300 border-0 border-b-2 "
             required
             type="text"
             placeholder="subject"
@@ -64,7 +66,8 @@ const Contact = () => {
             email
           </label>
           <input
-            className="text-gray-700 "
+            className="text-gray-700
+            border-blue-300 border-0 border-b-2 mb-5 "
             required
             type="text"
             placeholder="enter your email"
