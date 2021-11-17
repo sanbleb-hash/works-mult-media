@@ -10,7 +10,7 @@ const Navbar = () => {
     <nav className=" bg-indigo-800/30 border-b-2 shadow-md text-gray-100 w-screen h-[10vh] fixed z-50 font-montserrat ">
       <div className="  flex items-center justify-between w-[80vw] mx-auto h-full text-xl capitalize relative">
         <div className="">
-          <h1 className="flex  items-center cursor-pointer hover:text-gray-700 transition-all duration-75 ease-in relative   ">
+          <h1 className="flex  items-center cursor-pointer hover:text-gray-700 transition-all duration-75 ease-in relative text-lg lg:text-xl   ">
             <Link to="/">
               {' '}
               works{' '}
@@ -21,11 +21,11 @@ const Navbar = () => {
           </h1>
         </div>
 
-        <ul className=" hidden md:flex items-center font-medium  ">
-          <li className=" inline-block transition-all delay-75 hover:bg-opacity-70  ease-out  cursor-pointer mr-6 hover:border-b-2 hover:pb-3 hover:mt-3 border-b-black hover:animate-bounce">
+        <ul className=" hidden md:flex items-center lg:font-medium text-lg lg:text-xl  ">
+          <li className=" inline-block transition-all delay-75 hover:bg-opacity-70  ease-out  cursor-pointer  hover:border-b-2 hover:pb-3 hover:mt-3 border-b-black hover:animate-bounce">
             <Link to="/about">our compony</Link>{' '}
           </li>
-          <li className="mx-5  inline-block transition-all delay-75 hover:bg-opacity-70  ease-out  cursor-pointer mr-6 hover:border-b-2 hover:pb-3 hover:mt-3 border-b-black hover:animate-bounce">
+          <li className="mx-2 md:mx-5  inline-block transition-all delay-75 hover:bg-opacity-70  ease-out  cursor-pointer mr-6 hover:border-b-2 hover:pb-3 hover:mt-3 border-b-black hover:animate-bounce">
             {' '}
             <Link to="/about"> locations</Link>
           </li>

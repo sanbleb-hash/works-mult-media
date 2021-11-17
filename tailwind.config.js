@@ -14,6 +14,7 @@ module.exports = {
       animation: {
         move: 'move 10s ease-out infinite alternate',
       },
+
       keyframes: {
         move: {
           '0%, 25%': { transform: 'translateY(-36px)' },

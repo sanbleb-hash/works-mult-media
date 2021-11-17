@@ -1,20 +1,37 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Tiles = () => {
+  const history = useNavigate();
+  const name = 'video-editing';
+  const title = 'photography';
+  const title2 = 'graphic-design';
+
   return (
     <section className="min-h-screen w-screen mt-10 ">
       <div className="w-[80vw] mx-auto bg-gray-100 flex flex-col md:grid grid-cols-2 grid-rows-2 h-full gap-4 text-gray-50 ">
-        <div className=" row-span-2 h-[250px] md:h-[400px] shadow-2xl rounded-lg border  flex items-center justify-center text-center leading-10 relative bg-video bg-contain object-cover">
+        <div
+          className=" row-span-2 h-[250px] md:h-[400px] shadow-2xl rounded-lg border  flex items-center justify-center text-center leading-10 relative bg-video bg-contain object-cover cursor-pointer animate-leftIn "
+          // eslint-disable-next-line max-len
+          // long line of JavaScript …
+          onClick={() => history(`featured/${name}`)}
+        >
           <h1 className="uppercase bg-indigo-800/70 px-2 tracking-wider text-2xl rounded-lg ">
             video shooting <span className="block">& editing</span>
           </h1>
         </div>
-        <div className="  h-[250px] md:h-[190px] shadow-2xl rounded-lg border  flex items-center justify-center bg-photography bg-contain object-cover ">
-          <h1 className="uppercase bg-indigo-800/70 px-2 tracking-wider text-2xl rounded-lg bg-photography bg-cover object-cover ">
+        <div
+          className="  h-[250px] md:h-[190px] shadow-2xl rounded-lg border  flex items-center justify-center bg-photography bg-contain object-cover cursor-pointer animate-rightIn "
+          onClick={() => history(`featured/${title}`)}
+        >
+          <h1 className="uppercase bg-indigo-800/70 px-2 tracking-wider text-2xl rounded-lg bg-photography bg-cover  object-cover ">
             photography
           </h1>
         </div>
-        <div className="  h-[250px] md:h-[190px] shadow-2xl rounded-lg border  flex items-center justify-center bg-graphics2 bg-contain object-cover">
+        <div
+          className="  h-[250px] md:h-[190px] shadow-2xl rounded-lg border  flex items-center justify-center bg-graphics2 bg-contain object-cover cursor-pointer animate-rightIn"
+          onClick={() => history(`featured/${title2}`)}
+        >
           <h1 className="uppercase bg-indigo-800/70 px-2 tracking-wider text-2xl rounded-lg ">
             graphic design
           </h1>

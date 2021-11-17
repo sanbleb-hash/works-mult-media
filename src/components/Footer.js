@@ -17,14 +17,16 @@ const Footer = () => {
       {page.pathname === '/contact' ? '' : <Footerbanner />}
       <article className="flex flex-col sm:flex-row items-start sm:items-center justify-between  w-[80vw] mx-auto  ">
         <h1 className="flex  items-center cursor-pointer hover:underline transition-all duration-75 ease-in relative   ">
-          works
-          <span className="font-shalimer font-semibold text-3xls pl-2 ">
-            mult-media
-          </span>
+          <Link to="/">
+            works
+            <span className="font-shalimer font-semibold text-3xls pl-2 ">
+              mult-media
+            </span>
+          </Link>
         </h1>
         <ul className=" flex items-center font-medium justify-between flex-wrap  ">
           <li className=" inline-block transition-all delay-75 hover:bg-opacity-70  ease-out  cursor-pointer mr-6 hover:underline  ">
-            <Link to="/">our compony</Link>{' '}
+            <Link to="/about">our compony</Link>{' '}
           </li>
           <li className="mx-3  inline-block transition-all delay-75 hover:bg-opacity-70  ease-out  cursor-pointer mr-6 hover:underline">
             {' '}
