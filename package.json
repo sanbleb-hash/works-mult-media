@@ -18,7 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "watch:css": "npx tailwind src/tailwind.css -o src/index.css -w",
-    "build": "react-scripts build",
+    "build": "NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
