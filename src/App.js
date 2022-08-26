@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
@@ -11,7 +11,7 @@ import FeaturedDetails from './components/featuredDetails';
 
 function App() {
   return (
-    <React.Fragment>
+    <BrowserRouter>
       <Navbar />
       <Routes>
         <Route path="/*" element={<HomePage />} />
@@ -23,7 +23,7 @@ function App() {
         <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
-    </React.Fragment>
+    </BrowserRouter>
   );
 }
 
