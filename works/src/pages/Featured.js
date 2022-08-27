@@ -27,7 +27,7 @@ export const Featured = () => {
 	}, []);
 
 	return (
-		<section className=' w-screen pt-[10vh] text-white min-h-[100vh]  bg-black text-center '>
+		<section className=' w-screen pt-[10vh] text-white min-h-[100vh] pb-[250px]  bg-black text-center '>
 			<FeaturedDetails articles={articles} />
 		</section>
 	);

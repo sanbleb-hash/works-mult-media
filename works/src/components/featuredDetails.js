@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import DetailedPage from './detailedPage';
+import { articleContext } from '../utils/store';
 
 const FeaturedDetails = ({ articles }) => {
 	const { name } = useParams();
 	const [showTitle, setShowTitle] = useState(false);
+	const [showDetailed, setShowDetailed] = useState(false);
+
+	const { dispatch } = useContext(articleContext);
 
 	return (
-		<section className='text-white min-h-[70vh] w-[80vw] mx-auto  '>
+		<section className='text-white min-h-[70vh] w-[80vw] mx-auto  relative  '>
 			<div className=' flex  items-center justify-center flex-col '>
 				<div className='w-[80vw] min-h-[100px] bg-gradient-to-r from-yellow-500 via-yellow-200 to-yellow-700 py-3 mt-3 rounded-md shadow-2xl px-5'>
 					<h1 className='text-3xl md:text-4xl  '>{name}</h1>
@@ -25,6 +30,13 @@ const FeaturedDetails = ({ articles }) => {
 						<div
 							key={article.id}
 							className=' min-w-[350px] h-[200px] shadow-lg shadow-gray-900  rounded-md overflow-hidden relative '
+							onClick={() => {
+								setShowDetailed(!showDetailed);
+								dispatch(
+									{ type: 'ARTICLE_PAYLOAD', payload: article },
+									localStorage.setItem('article', JSON.stringify(article))
+								);
+							}}
 						>
 							<img
 								className=' w-full h-full object-cover'
@@ -32,8 +44,6 @@ const FeaturedDetails = ({ articles }) => {
 									article.attributes.cover?.data[0].attributes.formats.small.url
 								}
 								alt={article.attributes.title}
-								onMouseEnter={() => setShowTitle(!showTitle)}
-								onMouseLeave={() => setShowTitle(showTitle)}
 							/>
 							<video src='' alt='my demo' autoPlay={false} />
 
@@ -46,6 +56,7 @@ const FeaturedDetails = ({ articles }) => {
 					))
 				)}
 			</article>
+			{showDetailed && <DetailedPage cancel={setShowDetailed} />}
 		</section>
 	);
 };
