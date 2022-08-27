@@ -10,7 +10,9 @@ export const Featured = () => {
 
 	const fetchArticles = async () => {
 		try {
-			const { data } = await axios.get(`/articles?filters[type]=${name}`);
+			const { data } = await axios.get(
+				`/articles?populate=*&filters[type]=${name}`
+			);
 			if (data) {
 				setArticles(data.data);
 			}
@@ -21,11 +23,11 @@ export const Featured = () => {
 
 	useEffect(() => {
 		fetchArticles();
+		// eslint-disable-next-line
 	}, []);
-	console.log(articles);
 
 	return (
-		<section className=' w-screen pt-[10vh] text-white min-h-[80vh]  bg-black text-center '>
+		<section className=' w-screen pt-[10vh] text-white min-h-[100vh]  bg-black text-center '>
 			<FeaturedDetails articles={articles} />
 		</section>
 	);
