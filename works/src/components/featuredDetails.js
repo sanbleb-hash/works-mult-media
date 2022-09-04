@@ -32,10 +32,7 @@ const FeaturedDetails = ({ articles }) => {
 							className=' min-w-[350px] h-[200px] shadow-lg shadow-gray-900  rounded-md overflow-hidden relative '
 							onClick={() => {
 								setShowDetailed(!showDetailed);
-								dispatch(
-									{ type: 'ARTICLE_PAYLOAD', payload: article },
-									localStorage.setItem('article', JSON.stringify(article))
-								);
+								dispatch({ type: 'ARTICLE_PAYLOAD', payload: article });
 							}}
 						>
 							<img

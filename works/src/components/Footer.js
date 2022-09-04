@@ -14,7 +14,11 @@ const Footer = () => {
 					: ' text-white bg-indigo-400 w-screen min-h-[100px] text-center my-auto mx-auto shadow-xl pt-16 relative'
 			}
 		>
-			{page.pathname === '/contact' ? '' : <Footerbanner />}
+			{page.pathname === '/contact' || '/create' || '/login' ? (
+				''
+			) : (
+				<Footerbanner />
+			)}
 			<article className='flex flex-col sm:flex-row items-start sm:items-center justify-between  w-[80vw] mx-auto  '>
 				<h1 className='flex  items-center cursor-pointer hover:underline transition-all duration-75 ease-in relative   '>
 					<Link to='/'>

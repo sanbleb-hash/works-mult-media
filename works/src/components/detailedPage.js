@@ -9,7 +9,7 @@ const DetailedPage = ({ cancel }) => {
 
 	// useEffect(() => {
 	// 	dispatch({
-	// 		type: 'LOAD_ARTICLE',
+	// 		type: 'INITIAL_STAGE',
 	// 		loading: true,
 	// 	});
 	// }, [dispatch]);
