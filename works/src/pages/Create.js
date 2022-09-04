@@ -14,16 +14,16 @@ const Create = () => {
 
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
-		cover: [''],
+		cover: null,
 		description: '',
 		title: '',
 		type: '',
 	});
 	const handleChange = (e) => {
-		if (e.target.files) {
+		if (cover) {
 			setFormData((prevState) => ({
 				...prevState,
-				cover: e.target.files,
+				cover: e.target.files[0],
 			}));
 		} else {
 			setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,7 +32,8 @@ const Create = () => {
 
 	const { description, type, cover, title } = formData;
 
-		const token = user.jwt;
+	const token = user.jwt;
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -43,7 +44,7 @@ const Create = () => {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
-				body: JSON.stringify({ data: { description, type, cover, title } }),
+				body: JSON.stringify({ data: { description, type, title } }),
 			});
 			const data = await res.json(res);
 
@@ -53,27 +54,21 @@ const Create = () => {
 		}
 	};
 
-	const upload = async (e) => {
-       
-    formData.append('files', image)
-    formData.append('ref', 'articles')
-    formData.append('refId', articleId)
-    formData.append('field', 'cover')
+	const handleUpload = async (e) => {
+		e.preventDefault();
+		// // const myHeaders = new Headers(); myHeaders.append('Authorization', 'Bearer '+token); let result = await fetch('http://localhost:1337/upload',{ body: data, headers:myHeaders, method: "POST", timeout: 30000 }).then(response => response.json());Remove{ 'Content-Type': 'multipart/form-data' }`
 
-    const res = await fetch(`http://localhost:1337/api/articles/upload`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    })
+		const data = new FormData();
+		data.append('files', cover);
 
-    if (res.ok) {
-        await fetch(`http://localhost:1337/api/articles/articles/${article.id}`)
-    
-    }
-  }
-   };
+		const result = await axios.post('http://localhost:1337/api/upload', {
+			headers: {
+				authorization: `Bearer ${token}`,
+				body: JSON.stringify(data),
+			},
+		});
+		return result;
+	};
 
 	useEffect(() => {
 		document.title = 'Create Listing';
@@ -95,7 +90,7 @@ const Create = () => {
 			</Link>
 			<div className=' w-3/4 h-full mx-auto flex  items-center justify-center'>
 				<form
-					onSubmit={handleSubmit}
+					onSubmit={handleUpload}
 					className='flex  pt-20 items-start flex-col min-h-[50vh] gap-5'
 				>
 					<div className='flex items-center justify-between flex-col lg:flex-row gap-5'>
@@ -107,7 +102,6 @@ const Create = () => {
 							value={title}
 							placeholder='title...'
 						/>
-
 						<input
 							type='file'
 							name='cover'
@@ -141,7 +135,6 @@ const Create = () => {
 							<button
 								className='bg-green-300 px-5 rounded-lg ml-7 py-2 text-gray-400'
 								type='submit'
-								onSubmit={handleSubmit}
 							>
 								Submit
 							</button>

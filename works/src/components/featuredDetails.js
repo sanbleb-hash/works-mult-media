@@ -7,6 +7,8 @@ const FeaturedDetails = ({ articles }) => {
 	const { name } = useParams();
 	const [showTitle, setShowTitle] = useState(false);
 	const [showDetailed, setShowDetailed] = useState(false);
+	let image =
+		'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cGhvdG9ncmFwaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60';
 
 	const { dispatch } = useContext(articleContext);
 
@@ -38,7 +40,10 @@ const FeaturedDetails = ({ articles }) => {
 							<img
 								className=' w-full h-full object-cover'
 								src={
-									article.attributes.cover?.data[0].attributes.formats.small.url
+									article.attributes.cover.data
+										? article.attributes.cover?.data[0].attributes.formats.small
+												.url
+										: image
 								}
 								alt={article.attributes.title}
 							/>

@@ -4,8 +4,10 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { articleContext } from '../utils/store';
 
 const DetailedPage = ({ cancel }) => {
-	const { state, dispatch } = useContext(articleContext);
+	const { state } = useContext(articleContext);
 	const { articleID, loading } = state;
+	let image =
+		'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cGhvdG9ncmFwaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60';
 
 	// useEffect(() => {
 	// 	dispatch({
@@ -31,7 +33,11 @@ const DetailedPage = ({ cancel }) => {
 			<div className='flex bg to-blue-100 w-5/6 h-[70%] pl-4 shadow-xl shadow-black/70 mt-4 rounded-lg overflow-hidden mx-auto '>
 				<img
 					className=' w-full h-full object-cover rounded-lg '
-					src={articleID.attributes.cover?.data[0].attributes.formats.large.url}
+					src={
+						articleID.attributes.cover.data
+							? articleID.attributes.cover?.data[0].attributes.formats.small.url
+							: image
+					}
 					alt={articleID.attributes.title}
 				/>
 			</div>
