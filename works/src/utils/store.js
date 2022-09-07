@@ -25,7 +25,7 @@ const reducer = (state, action) => {
 				loading: false,
 				payload: action.payload,
 			};
-		case 'LOGIN_OUT_USER':
+		case 'LOG_OUT_USER':
 			return {
 				...state,
 				loading: false,

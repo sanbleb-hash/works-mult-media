@@ -14,7 +14,7 @@ const Footer = () => {
 					: ' text-white bg-indigo-400 w-screen min-h-[100px] text-center my-auto mx-auto shadow-xl pt-16 relative'
 			}
 		>
-			{page.pathname === '/contact' || '/create' || '/login' ? (
+			{page.pathname !== 'contact' || 'create' || 'login' ? (
 				''
 			) : (
 				<Footerbanner />

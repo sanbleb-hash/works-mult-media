@@ -5,6 +5,7 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 } from 'firebase/auth';
+import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 
 import { articleContext } from '../utils/store';
 import { useNavigate } from 'react-router-dom';
@@ -68,13 +69,16 @@ const Login = () => {
 					payload: user,
 				});
 			}
+			// sending users to the database
+			const formDataCopy = { email, displayName: name };
+			formDataCopy.timestamp = serverTimestamp();
 
+			await setDoc(doc(db, 'users', user.uid), formDataCopy);
+
+			if (user) navigate('/create');
 			localStorage.setItem('user', JSON.stringify(user));
-			setTimeout(() => {
-				if (user) navigate('/create');
-			}, 2000);
+
 			console.log(user);
-			console.log(db);
 		} catch (err) {
 			dispatch({
 				type: 'USER_ERROR',

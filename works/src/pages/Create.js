@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaArrowLeft, FaPlus } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import { RiLoader5Line } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { articleContext } from '../utils/store';
 
 const Create = () => {
-	const { state } = useContext(articleContext);
+	const { state, dispatch } = useContext(articleContext);
 	const { user } = state;
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -89,9 +89,22 @@ const Create = () => {
 					<RiLoader5Line className='text-5xl text-blue-300' />
 				</div>
 			)}
+			<h1 className='text-gray-500 text-center text-5xl capitalize pb-4'>
+				post another one
+			</h1>
 
-			<h1 className='pl-5 text-gray-500 capitalize '>create another post</h1>
-			<Link className='pl-7 text-gray-500' to={-1}>
+			<button
+				onClick={() => {
+					dispatch({
+						type: 'LOG_OUT_USER',
+					});
+					navigate('/');
+				}}
+				className='pl-5 text-gray-700 capitalize border bg-emerald-200 px-4 py-2 hover:text-gray-500 shadow-lg shadow-white '
+			>
+				log out
+			</button>
+			<Link className=' text-gray-500 block py-3' to={'/'}>
 				<button type='button' className=' hover:text-gray-500 hover:scale-105'>
 					<FaArrowLeft style={{ paddingRight: 4, display: 'inline' }} /> go back
 				</button>
@@ -101,17 +114,16 @@ const Create = () => {
 					onSubmit={handleUpload}
 					className='flex  pt-20 items-start flex-col min-h-[50vh] gap-5'
 				>
-					<div className='flex items-center justify-between flex-col lg:flex-row gap-5'>
+					<div className='flex items-center justify-center lg:justify-between flex-col lg:flex-row gap-5'>
 						<input
 							type='text'
-							className='shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+							className='shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight w-full focus:outline-none focus:shadow-outline'
 							onChange={handleChange}
 							name='title'
 							value={title}
 							placeholder='title...'
 						/>
-						<FaPlus />
-						<label htmlFor={cover}></label>
+
 						<input
 							type='file'
 							name='cover'
@@ -121,7 +133,7 @@ const Create = () => {
 						/>
 
 						<select
-							className='shadow appearance-none border rounded w-[200px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+							className='shadow appearance-none border rounded lg:w-[200px] py-2 px-3 text-gray-700 w-full leading-tight focus:outline-none focus:shadow-outline'
 							onChange={handleChange}
 							name='type'
 							value={type}

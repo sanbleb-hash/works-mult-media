@@ -10,6 +10,7 @@ import FeaturedDetails from './components/featuredDetails';
 import Layout from './layout';
 import Create from './pages/Create';
 import Login from './pages/Login';
+import PrivateRoute from './pages/PrivateRoute';
 
 function App() {
 	return (
@@ -25,7 +26,9 @@ function App() {
 					<Route path='/contact' element={<Contact />} />
 					<Route path='/about' element={<About />} />
 					<Route path='/login' element={<Login />} />
-					<Route path='/create' element={<Create />} />
+					<Route path='/create' element={<PrivateRoute />}>
+						<Route path='/create' element={<Create />} />
+					</Route>
 				</Routes>
 			</Layout>
 		</BrowserRouter>
