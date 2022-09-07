@@ -32,8 +32,7 @@ const Create = () => {
 
 	const { description, type, cover, title } = formData;
 
-	const token = user.jwt;
-
+	const token = user.stsTokenManager.accessToken;
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -56,18 +55,27 @@ const Create = () => {
 
 	const handleUpload = async (e) => {
 		e.preventDefault();
-		// // const myHeaders = new Headers(); myHeaders.append('Authorization', 'Bearer '+token); let result = await fetch('http://localhost:1337/upload',{ body: data, headers:myHeaders, method: "POST", timeout: 30000 }).then(response => response.json());Remove{ 'Content-Type': 'multipart/form-data' }`
 
 		const data = new FormData();
-		data.append('files', cover);
+		data.append('files', cover[0]);
+		data.append('ref', 'articles');
 
-		const result = await axios.post('http://localhost:1337/api/upload', {
-			headers: {
-				authorization: `Bearer ${token}`,
-				body: JSON.stringify(data),
-			},
+		let result = await axios.post('http://localhost:1337/upload', data, {
+			// headers: {
+			// 	Authorization: `Bearer ${token}`,
+			// },
 		});
-		return result;
+
+		console.log(result);
+
+		// const data = new FormData();
+		// data.append('files', cover[0]);
+
+		// const result = await fetch('http://localhost:1337/api/upload', {
+		// 	data,
+		// 	method: 'POST',
+		// });
+		// return result;
 	};
 
 	useEffect(() => {
@@ -102,6 +110,8 @@ const Create = () => {
 							value={title}
 							placeholder='title...'
 						/>
+						<FaPlus />
+						<label htmlFor={cover}></label>
 						<input
 							type='file'
 							name='cover'
@@ -109,7 +119,6 @@ const Create = () => {
 							multiple
 							onChange={handleChange}
 						/>
-						<FaPlus />
 
 						<select
 							className='shadow appearance-none border rounded w-[200px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'

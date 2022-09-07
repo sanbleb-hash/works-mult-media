@@ -19,7 +19,7 @@ const reducer = (state, action) => {
 			return {
 				loading: true,
 			};
-		case 'LOGIN_IN_USER':
+		case 'USER_LOGIN':
 			return {
 				...state,
 				loading: false,
