@@ -1,86 +1,120 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+
 import { FaArrowLeft } from 'react-icons/fa';
 import { RiLoader5Line } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import {
+	getStorage,
+	ref,
+	uploadBytesResumable,
+	getDownloadURL,
+} from 'firebase/storage';
+
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { articleContext } from '../utils/store';
+import { db } from '../firebase/config';
 
 const Create = () => {
-	const { state, dispatch } = useContext(articleContext);
-	const { user } = state;
+	const { dispatch } = useContext(articleContext);
+	const auth = getAuth();
+
 	const [isLoading, setIsLoading] = useState(false);
 
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
-		cover: null,
+		cover: {},
 		description: '',
 		title: '',
 		type: '',
+		userRef: '',
 	});
 	const handleChange = (e) => {
-		if (cover) {
+		if (e.target.files) {
 			setFormData((prevState) => ({
 				...prevState,
-				cover: e.target.files[0],
+				cover: e.target.files,
 			}));
 		} else {
 			setFormData({ ...formData, [e.target.name]: e.target.value });
 		}
 	};
 
-	const { description, type, cover, title } = formData;
+	const { description, type, cover, title, userRef } = formData;
 
-	const token = user.stsTokenManager.accessToken;
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		try {
-			const res = await fetch('http://localhost:1337/api/articles', {
-				method: 'POST',
-				mode: 'cors',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({ data: { description, type, title } }),
-			});
-			const data = await res.json(res);
 
-			console.log(data);
+		try {
+			// store images in firesore
+			setIsLoading(true);
+			const storeImage = async (image) => {
+				return new Promise((resolve, reject) => {
+					const storage = getStorage();
+					const fileName = `${auth.currentUser.uid}-${uuidv4()}`;
+					const storageRef = ref(storage, 'images/' + fileName);
+
+					const uploadTask = uploadBytesResumable(storageRef, image);
+					uploadTask.on(
+						'state_changed',
+						(snapshot) => {
+							const progress =
+								(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+							console.log('Upload is ' + progress + '% done');
+							switch (snapshot.state) {
+								case 'paused':
+									console.log('Upload is paused');
+									break;
+								case 'running':
+									console.log('Upload is running');
+									break;
+								default:
+									return snapshot.state;
+							}
+						},
+						(error) => {
+							reject(error);
+						},
+						() => {
+							getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+								resolve(downloadURL);
+							});
+						}
+					);
+				});
+			};
+
+			const imgUrls = await Promise.all(
+				[...cover].map((image) => storeImage(image))
+			).catch(() => {
+				setIsLoading(false);
+				toast.error('Images not uploaded');
+				return;
+			});
+			const formDataCopy = {
+				...formData,
+
+				timestamp: serverTimestamp,
+			};
+			await addDoc(collection(db, 'articles'), formDataCopy);
+
+			setIsLoading(false);
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-	const handleUpload = async (e) => {
-		e.preventDefault();
-
-		const data = new FormData();
-		data.append('files', cover[0]);
-		data.append('ref', 'articles');
-
-		let result = await axios.post('http://localhost:1337/upload', data, {
-			// headers: {
-			// 	Authorization: `Bearer ${token}`,
-			// },
-		});
-
-		console.log(result);
-
-		// const data = new FormData();
-		// data.append('files', cover[0]);
-
-		// const result = await fetch('http://localhost:1337/api/upload', {
-		// 	data,
-		// 	method: 'POST',
-		// });
-		// return result;
-	};
-
 	useEffect(() => {
 		document.title = 'Create Listing';
-	}, []);
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				return setFormData({ ...formData, userRef: user.uid });
+			}
+		});
+	}, [auth]);
 
 	return (
 		<section className='p-8 pt-20 min-h-[70vh]'>
@@ -111,7 +145,7 @@ const Create = () => {
 			</Link>
 			<div className=' w-3/4 h-full mx-auto flex  items-center justify-center'>
 				<form
-					onSubmit={handleUpload}
+					onSubmit={handleSubmit}
 					className='flex  pt-20 items-start flex-col min-h-[50vh] gap-5'
 				>
 					<div className='flex items-center justify-center lg:justify-between flex-col lg:flex-row gap-5'>
@@ -122,6 +156,14 @@ const Create = () => {
 							name='title'
 							value={title}
 							placeholder='title...'
+						/>
+						<input
+							type='text'
+							className='shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight w-full focus:outline-none focus:shadow-outline'
+							onChange={handleChange}
+							name='userRef'
+							value={userRef}
+							placeholder={userRef}
 						/>
 
 						<input

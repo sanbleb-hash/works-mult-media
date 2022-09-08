@@ -27,22 +27,18 @@ const DetailedPage = ({ cancel }) => {
 					onClick={(prev) => cancel(!prev)}
 				/>
 				<p className=' text-2xl shadow-xl shadow-black/50 text-gray-800 p-3 mr-4'>
-					{articleID?.attributes.title}
+					{articleID?.data.title}
 				</p>
 			</div>
 			<div className='flex bg to-blue-100 w-5/6 h-[70%] pl-4 shadow-xl shadow-black/70 mt-4 rounded-lg overflow-hidden mx-auto '>
 				<img
 					className=' w-full h-full object-cover rounded-lg '
-					src={
-						articleID.attributes.cover.data
-							? articleID.attributes.cover?.data[0].attributes.formats.small.url
-							: image
-					}
-					alt={articleID.attributes.title}
+					src={articleID.data.cover ? articleID.data.cover[0] : image}
+					alt={articleID.data.title}
 				/>
 			</div>
 			<div className=' w-[90%] mt-4 mx-auto py-3 bg-white text-gray-600 '>
-				<p>{articleID.attributes.description}</p>
+				<p>{articleID.data.description}</p>
 			</div>
 		</div>
 	);
