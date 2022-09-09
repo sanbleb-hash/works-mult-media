@@ -77,8 +77,6 @@ const Login = () => {
 
 			if (user) navigate('/create');
 			localStorage.setItem('user', JSON.stringify(user));
-
-			console.log(user);
 		} catch (err) {
 			dispatch({
 				type: 'USER_ERROR',

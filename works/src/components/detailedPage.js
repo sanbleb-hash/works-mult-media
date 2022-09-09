@@ -9,13 +9,6 @@ const DetailedPage = ({ cancel }) => {
 	let image =
 		'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cGhvdG9ncmFwaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60';
 
-	// useEffect(() => {
-	// 	dispatch({
-	// 		type: 'INITIAL_STAGE',
-	// 		loading: true,
-	// 	});
-	// }, [dispatch]);
-
 	return (
 		<div className=' absolute top-2 h-[85vh] -left-7 -right-7 rounded-md bg-yellow-700/50 '>
 			<div className='flex w-full items-center pb-3 bg-white/60 justify-between'>
@@ -26,7 +19,7 @@ const DetailedPage = ({ cancel }) => {
 					className=' hover:scale-110 pt-4 pl-3 text-5xl text-gray-800'
 					onClick={(prev) => cancel(!prev)}
 				/>
-				<p className=' text-2xl shadow-xl shadow-black/50 text-gray-800 p-3 mr-4'>
+				<p className=' text-2xl shadow-xl shadow-black/50 text-gray-800 p-3 mr-4 bg-white'>
 					{articleID?.data.title}
 				</p>
 			</div>

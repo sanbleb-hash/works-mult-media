@@ -11,6 +11,7 @@ import Layout from './layout';
 import Create from './pages/Create';
 import Login from './pages/Login';
 import PrivateRoute from './pages/PrivateRoute';
+import Thanks from './pages/Thankyou';
 
 function App() {
 	return (
@@ -29,6 +30,7 @@ function App() {
 					<Route path='/create' element={<PrivateRoute />}>
 						<Route path='/create' element={<Create />} />
 					</Route>
+					<Route path='/thank-you' element={<Thanks />} />
 				</Routes>
 			</Layout>
 		</BrowserRouter>
