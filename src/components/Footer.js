@@ -14,7 +14,7 @@ const Footer = () => {
 					: ' text-white bg-indigo-400 w-screen min-h-[100px] text-center my-auto mx-auto shadow-xl pt-16 relative'
 			}
 		>
-			{page.pathname !== 'contact' || 'create' || 'login' ? (
+			{page.pathname !== 'contact' || 'create' || ' login' ? (
 				''
 			) : (
 				<Footerbanner />
@@ -44,9 +44,27 @@ const Footer = () => {
 			<hr className='w-[80vw] mx-auto my-5 bg-yellow-700 ' />
 			<section className='my-5'>
 				<div className='flex items-center justify-end px-10 '>
-					<FaFacebook className=' shadow-2xl hover:text-blue-700' />
-					<FaTwitter className='mx-5  shadow-2xl hover:text-blue-700 ' />
-					<FaYoutube className=' shadow-2xl hover:text-red-600' />
+					<a
+						href='https://www.facebook.com/GRAPHICPREACHERLEO'
+						target='_blank'
+						rel='norefferer'
+					>
+						<FaFacebook className=' shadow-2xl hover:text-blue-700' />
+					</a>
+					<a
+						href='https://twitter.com/leobutao2'
+						target='_blank'
+						rel='norefferer'
+					>
+						<FaTwitter className='mx-5  shadow-2xl hover:text-blue-700 ' />
+					</a>
+					<a
+						href='https://www.youtube.com/channel/UCKb43TK5hiPziOwvbdmqnzw'
+						target='_blank'
+						rel='norefferer'
+					>
+						<FaYoutube className=' shadow-2xl hover:text-red-600' />
+					</a>
 				</div>
 			</section>
 			san bleb 2021
