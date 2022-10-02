@@ -32,16 +32,6 @@ const Create = () => {
 		type: 'photography',
 		userRef: '',
 	});
-	const handleChange = (e) => {
-		if (cover) {
-			setFormData((prevState) => ({
-				...prevState,
-				cover: e.target.files,
-			}));
-		} else {
-			setFormData({ ...formData, [e.target.name]: e.target.value });
-		}
-	};
 
 	const { description, type, cover, title, userRef } = formData;
 
@@ -51,74 +41,74 @@ const Create = () => {
 			return toast.error('pliz add a file');
 		}
 
-		try {
-			// store images in firesore
-			setIsLoading(true);
-			const storeImage = async (image) => {
-				return new Promise((resolve, reject) => {
-					const storage = getStorage();
-					const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
-					const storageRef = ref(storage, 'cover/' + fileName);
+		// store images in firesore
+		setIsLoading(true);
+		const storeImage = async (image) => {
+			return new Promise((resolve, reject) => {
+				const storage = getStorage();
+				const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+				const storageRef = ref(storage, 'cover/' + fileName);
 
-					const uploadTask = uploadBytesResumable(storageRef, image);
-					uploadTask.on(
-						'state_changed',
-						(snapshot) => {
-							const progress =
-								(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-							console.log('Upload is ' + progress + '% done');
-							switch (snapshot.state) {
-								case 'paused':
-									console.log('Upload is paused');
-									break;
-								case 'running':
-									console.log('Upload is running');
-									break;
-								default:
-									break;
-							}
-						},
-						(error) => {
-							reject(error);
-						},
-						() => {
-							getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-								resolve(downloadURL);
-							});
+				const uploadTask = uploadBytesResumable(storageRef, image);
+				uploadTask.on(
+					'state_changed',
+					(snapshot) => {
+						const progress =
+							(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+						console.log('Upload is ' + progress + '% done');
+						switch (snapshot.state) {
+							case 'paused':
+								console.log('Upload is paused');
+								break;
+							case 'running':
+								console.log('Upload is running');
+								break;
+							default:
+								break;
 						}
-					);
-				});
-			};
-
-			const imgUrls = await Promise.all(
-				[...cover].map((urls) => storeImage(urls))
-			).catch(() => {
-				setIsLoading(false);
-				toast.error('Images not uploaded');
-				return;
+					},
+					(error) => {
+						reject(error);
+					},
+					() => {
+						getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+							resolve(downloadURL);
+						});
+					}
+				);
 			});
+		};
 
-			await uploadDB(imgUrls);
-
+		const imgUrls = await Promise.all(
+			[...cover].map((urls) => storeImage(urls))
+		).catch(() => {
 			setIsLoading(false);
-		} catch (err) {
-			console.log(err);
-		}
+			toast.error('Images not uploaded');
+			return;
+		});
+
+		console.log(imgUrls);
+
+		// 	const formDataCopy = {
+		// 		...formData,
+		// 		cover: imgUrls,
+
+		// 		timestamp: serverTimestamp(),
+		// 	};
+		// 	await addDoc(collection(db, 'articles'), formDataCopy);
+		// 	setIsLoading(false);
+		// 	toast.success('Listing saved');
+		// 	navigate(`/featured/${formDataCopy.type}`);
 	};
 
-	const uploadDB = async (pics) => {
-		try {
-			const postRef = collection(db, 'articles');
-			const formDataCopy = {
-				...formData,
-				cover: pics,
-				timestamp: serverTimestamp(),
-			};
-
-			const item = await addDoc(postRef, formDataCopy);
-			if (item) navigate('/');
-		} catch (err) {
-			console.log(err);
+	const handleChange = (e) => {
+		if (e.target.files) {
+			setFormData((prevState) => ({
+				...prevState,
+				cover: e.target.files,
+			}));
+		} else {
+			setFormData({ ...formData, [e.target.name]: e.target.value });
 		}
 	};
 
@@ -182,15 +172,17 @@ const Create = () => {
 									name='userRef'
 									value={userRef}
 									placeholder={userRef}
+									disabled
 								/>
 
 								<input
 									type='file'
-									name='cover'
+									id='cover'
 									accept='.jpg,.png,.jpeg,.mp4'
 									multiple
 									onChange={handleChange}
 								/>
+								{cover.lenth && 'yes'}
 
 								<select
 									className='shadow appearance-none border rounded lg:w-[150px] py-2 px-3 text-gray-700 w-full  leading-tight focus:outline-none focus:shadow-outline'
