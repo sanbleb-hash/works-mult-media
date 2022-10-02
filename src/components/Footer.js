@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FaFacebook, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import Footerbanner from './footer-pop';
 
@@ -45,23 +45,33 @@ const Footer = () => {
 			<section className='my-5'>
 				<div className='flex items-center justify-end px-10 '>
 					<a
+						href='https://wa.me/748580052?text=%20hello,%20I%20am%20interested%20in%20your%20services'
+						target='_blank'
+						rel='noreferrer'
+					>
+						<FaWhatsapp
+							className='
+                  text-green-500 shadow-2xl hover:text-green-700'
+						/>
+					</a>
+					<a
 						href='https://www.facebook.com/GRAPHICPREACHERLEO'
 						target='_blank'
-						rel='norefferer'
+						rel='noreferrer'
 					>
 						<FaFacebook className=' shadow-2xl hover:text-blue-700' />
 					</a>
 					<a
 						href='https://twitter.com/leobutao2'
 						target='_blank'
-						rel='norefferer'
+						rel='noreferrer'
 					>
 						<FaTwitter className='mx-5  shadow-2xl hover:text-blue-700 ' />
 					</a>
 					<a
 						href='https://www.youtube.com/channel/UCKb43TK5hiPziOwvbdmqnzw'
 						target='_blank'
-						rel='norefferer'
+						rel='noreferrer'
 					>
 						<FaYoutube className=' shadow-2xl hover:text-red-600' />
 					</a>
