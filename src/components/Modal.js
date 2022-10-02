@@ -19,7 +19,7 @@ const Modal = () => {
 				</div>
 				<div className='flex items-center justify-end pt-[30rem] px-10 gap-3  '>
 					<a
-						href='https://wa.me/676912501?text=%20hello,%20I%20am%20interested%20in%20your%20services'
+						href='https://wa.me/731963578?text=%20hello,%20I%20am%20interested%20in%20your%20services'
 						target='_blank'
 						rel='noreferrer'
 						className='rounded-full hover:bg-green-700'
