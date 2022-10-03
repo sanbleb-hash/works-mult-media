@@ -40,6 +40,7 @@ const Footer = () => {
 						<Link to='/contact'>contact</Link>
 					</li>
 				</ul>
+				`bx`
 			</article>
 			<hr className='w-[80vw] mx-auto my-5 bg-yellow-700 ' />
 			<section className='my-5'>
