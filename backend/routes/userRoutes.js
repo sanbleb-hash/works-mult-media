@@ -6,7 +6,7 @@ const handler = express.Router();
 handler.post('/', async (req, res) => {
 	const { displayName, email, userID } = req.body;
 
-	existUser = await User.findOne({ email });
+	const existUser = await User.findOne({ email });
 	const newUser = { email, displayName, userID };
 
 	try {

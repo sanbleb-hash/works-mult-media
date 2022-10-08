@@ -4,18 +4,11 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import {
-	getStorage,
-	ref,
-	uploadBytesResumable,
-	getDownloadURL,
-} from 'firebase/storage';
 
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { articleContext } from '../utils/store';
-import { db } from '../firebase/config';
+
 import Loader from '../components/loader';
 
 const Create = () => {
@@ -23,6 +16,7 @@ const Create = () => {
 	const auth = getAuth();
 
 	const [isLoading, setIsLoading] = useState(false);
+	const [isPreview, setIsPreview] = useState(null);
 
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
@@ -37,68 +31,23 @@ const Create = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		// store images in firesore
+	};
+
+	const upLoadToCloudnary = (e) => {
+		e.preventDefault();
 		if (cover === null) {
 			return toast.error('pliz add a file');
 		}
-
-		// store images in firesore
-		setIsLoading(true);
-		const storeImage = async (image) => {
-			return new Promise((resolve, reject) => {
-				const storage = getStorage();
-				const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
-				const storageRef = ref(storage, 'cover/' + fileName);
-
-				const uploadTask = uploadBytesResumable(storageRef, image);
-				uploadTask.on(
-					'state_changed',
-					(snapshot) => {
-						const progress =
-							(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-						console.log('Upload is ' + progress + '% done');
-						switch (snapshot.state) {
-							case 'paused':
-								console.log('Upload is paused');
-								break;
-							case 'running':
-								console.log('Upload is running');
-								break;
-							default:
-								break;
-						}
-					},
-					(error) => {
-						reject(error);
-					},
-					() => {
-						getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-							resolve(downloadURL);
-						});
-					}
-				);
-			});
+		previewFile(cover);
+	};
+	const previewFile = (file) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onloadend = () => {
+			setIsPreview(reader.result);
 		};
-
-		const imgUrls = await Promise.all(
-			[...cover].map((urls) => storeImage(urls))
-		).catch(() => {
-			setIsLoading(false);
-			toast.error('Images not uploaded');
-			return;
-		});
-
-		console.log(imgUrls);
-
-		// 	const formDataCopy = {
-		// 		...formData,
-		// 		cover: imgUrls,
-
-		// 		timestamp: serverTimestamp(),
-		// 	};
-		// 	await addDoc(collection(db, 'articles'), formDataCopy);
-		// 	setIsLoading(false);
-		// 	toast.success('Listing saved');
-		// 	navigate(`/featured/${formDataCopy.type}`);
 	};
 
 	const handleChange = (e) => {
@@ -152,8 +101,9 @@ const Create = () => {
 						</button>
 					</Link>
 					<div className=' w-3/4 h-full mx-auto flex  items-center justify-center'>
+						{isPreview && console.log(isPreview)}
 						<form
-							onSubmit={handleSubmit}
+							onSubmit={upLoadToCloudnary}
 							className='flex  pt-20 items-start flex-col min-h-[50vh] gap-5'
 						>
 							<div className='flex items-center justify-center lg:justify-between flex-col lg:flex-row gap-5'>
@@ -214,7 +164,7 @@ const Create = () => {
 								)}
 							</div>
 						</form>
-					</div>{' '}
+					</div>
 				</>
 			)}
 		</section>

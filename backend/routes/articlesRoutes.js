@@ -4,7 +4,7 @@ import Article from '../modals/article.js';
 const handler = express.Router();
 
 handler.post('/create', async (req, res) => {
-	const { cover, title, type, description } = req.body;
+	const { cover, title, type, description, userRef } = req.body;
 
 	try {
 		const article = await Article.findOne({ title });
@@ -17,6 +17,7 @@ handler.post('/create', async (req, res) => {
 				title,
 				type,
 				description,
+				userID: userRef,
 			});
 			newArticle.save();
 			res.status(201).json(newArticle);
@@ -59,12 +60,14 @@ handler.delete('/:id', async (req, res) => {
 });
 handler.put('/:id', async (req, res) => {
 	const { title, description, type } = req.body;
+
 	try {
 		const article = await Article.findById(req.params.id);
+
 		if (article) {
-			(article.title = title),
-				(article.type = type),
-				(article.description = description);
+			article.title = title;
+			article.type = type;
+			article.description = description;
 			const updateArticle = await article.save();
 
 			res.status(200).json(updateArticle);
