@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 import uploadRoutes from './routes/upload.js';
 import articlesRoutes from './routes/articlesRoutes.js';
@@ -10,7 +11,7 @@ import { signature } from './routes/cloudinary.js';
 // middlware
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(cors());
 dotenv.config();
 
 // connecting to the server

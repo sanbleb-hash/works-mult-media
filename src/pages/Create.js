@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaUpload } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { articleContext } from '../utils/store';
 
 import Loader from '../components/loader';
+import axios from 'axios';
 
 const Create = () => {
 	const { dispatch } = useContext(articleContext);
 	const auth = getAuth();
 
 	const [isLoading, setIsLoading] = useState(false);
-	const [isPreview, setIsPreview] = useState(null);
+
+	const [showUpload, setShowUpLoad] = useState(false);
 
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
@@ -35,26 +35,42 @@ const Create = () => {
 		// store images in firesore
 	};
 
-	const upLoadToCloudnary = (e) => {
+	const upLoadToCloudnary = async (e, imageField = 'cover') => {
 		e.preventDefault();
-		if (cover === null) {
-			return toast.error('pliz add a file');
+		const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_NAME}/auto/upload`;
+		try {
+			setShowUpLoad(true);
+			const {
+				data: { signature, timestamp },
+			} = await axios.post('http://localhost:5000/api/v1/upload');
+
+			const upload = e.target.files[0];
+			const formInput = new FormData();
+			formInput.append('file', upload);
+			formInput.append('signature', signature);
+			formInput.append('timestamp', timestamp);
+
+			formInput.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY);
+			const { data } = await axios.post(url, formInput, {
+				headers: { 'Content-Type': 'multipart/form-data' },
+			});
+
+			setIsLoading(false);
+			setFormData({
+				...formData,
+				cover: { photo: data.secure_url, public_id: data.public_id },
+			});
+			console.log(data);
+			toast.success('File uploaded successfully');
+		} catch (err) {
+			toast.error({ err });
 		}
-		previewFile(cover);
-	};
-	const previewFile = (file) => {
-		const reader = new FileReader();
-		reader.readAsDataURL(file);
-		reader.onloadend = () => {
-			setIsPreview(reader.result);
-		};
 	};
 
 	const handleChange = (e) => {
 		if (e.target.files) {
 			setFormData((prevState) => ({
 				...prevState,
-				cover: e.target.files,
 			}));
 		} else {
 			setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -101,9 +117,8 @@ const Create = () => {
 						</button>
 					</Link>
 					<div className=' w-3/4 h-full mx-auto flex  items-center justify-center'>
-						{isPreview && console.log(isPreview)}
 						<form
-							onSubmit={upLoadToCloudnary}
+							onSubmit={() => {}}
 							className='flex  pt-20 items-start flex-col min-h-[50vh] gap-5'
 						>
 							<div className='flex items-center justify-center lg:justify-between flex-col lg:flex-row gap-5'>
@@ -124,15 +139,34 @@ const Create = () => {
 									placeholder={userRef}
 									disabled
 								/>
+								<div>
+									{showUpload ? (
+										<>uploading..</>
+									) : (
+										<label
+											className='text-xl flex items-center gap-2 border border-gray-500 rounded p-2 cursor-pointer '
+											htmlFor='imageFile'
+										>
+											<FaUpload fill='green' />
+											<span className='text-xl text-gray-500'>upload</span>
+										</label>
+									)}
+									<input
+										hidden
+										type='file'
+										accept='.jpg,.png,.jpeg,.mp4'
+										id='imageFile'
+										onChange={upLoadToCloudnary}
+									/>
+								</div>
 
 								<input
-									type='file'
+									type='text'
+									name='cover'
 									id='cover'
-									accept='.jpg,.png,.jpeg,.mp4'
-									multiple
 									onChange={handleChange}
+									value={cover.photo}
 								/>
-								{cover.lenth && 'yes'}
 
 								<select
 									className='shadow appearance-none border rounded lg:w-[150px] py-2 px-3 text-gray-700 w-full  leading-tight focus:outline-none focus:shadow-outline'

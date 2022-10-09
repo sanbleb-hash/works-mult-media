@@ -6,7 +6,7 @@ export const signature = (req, res) => {
 		{
 			timestamp: timestamp,
 		},
-		process.env.CLOUDINARY_API_SECRET_KEY
+		process.env.CLOUDINAR_API_SECRET_KEY
 	);
 	res.status(200).json({ signature, timestamp });
 };
