@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Tiles = () => {
 	const history = useNavigate();
-	const name = 'video-editing';
+	const name = 'video-production';
 	const title = 'photography';
 	const title2 = 'graphic-design';
 

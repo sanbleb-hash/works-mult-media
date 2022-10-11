@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom';
 import DetailedPage from './detailedPage';
 import { articleContext } from '../utils/store';
 import { toast } from 'react-toastify';
-import { collection, getDocs, limit, query, where } from 'firebase/firestore';
-import { db } from '../firebase/config';
+
 import Loader from './loader';
+import axios from 'axios';
+import { FaPlay } from 'react-icons/fa';
 
 const FeaturedDetails = () => {
 	const { name } = useParams();
@@ -17,31 +18,12 @@ const FeaturedDetails = () => {
 	const fetchArticles = async () => {
 		try {
 			setLoading(true);
-			// get reference
-			const articleRef = collection(db, 'articles');
-
-			// create a query object
-
-			const q = query(
-				articleRef,
-				where('type', '==', name),
-
-				limit(10)
+			const { data } = await axios.get(
+				`http://localhost:5000/api/articles?type=${name}`
 			);
 
-			// execute query
-			const querySnap = await getDocs(q);
-			let listings = [];
-
-			querySnap.forEach((doc) => {
-				return listings.push({
-					id: doc.id,
-					data: doc.data(),
-				});
-			});
-
+			setArticles(data);
 			setLoading(false);
-			setArticles(listings);
 		} catch (err) {
 			toast.error(err);
 		}
@@ -83,30 +65,42 @@ const FeaturedDetails = () => {
 						) : (
 							articles?.map((article) => (
 								<div
-									key={article.id}
+									key={article._id}
 									className=' min-w-[350px] h-[200px] shadow-lg shadow-gray-900  rounded-md overflow-hidden relative '
 									onClick={() => {
 										setShowDetailed(!showDetailed);
 										dispatch({ type: 'ARTICLE_PAYLOAD', payload: article });
 									}}
 								>
-									<img
-										className=' w-full h-full object-cover'
-										src={article.data.cover[0] || image}
-										alt={article.data.title}
-									/>
-									<video src='' alt='my demo' autoPlay={false} />
+									{name === 'video-production' ? (
+										<>
+											<video
+												className=' w-full h-full object-cover rounded-lg relative '
+												src={article?.cover.photo}
+												alt='my demo video'
+											/>
+											<FaPlay className='absolute top-1/2 bottom-1/2 left-[180px] text-4xl text-gray-400 shadow p-2 bg-red-700 rounded-md ' />
+										</>
+									) : (
+										<img
+											className=' w-full h-full object-cover'
+											src={article?.cover.photo || image}
+											alt={article.title}
+										/>
+									)}
 
 									{showTitle && (
 										<h3 className=' bg-gray-500/60 text-2xl italic p-2 absolute top-1/2 left-1/2 rounded-l-lg  '>
-											{article.data.description}
+											{article.description}
 										</h3>
 									)}
 								</div>
 							))
 						)}
 					</article>
-					{showDetailed && <DetailedPage cancel={setShowDetailed} />}
+					{showDetailed && (
+						<DetailedPage cancel={setShowDetailed} type={name} />
+					)}
 				</>
 			)}
 		</section>

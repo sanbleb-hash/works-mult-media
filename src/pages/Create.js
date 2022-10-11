@@ -31,8 +31,21 @@ const Create = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		try {
+			setIsLoading(true);
+			const { data } = await axios.post(
+				'http://localhost:5000/api/articles/create',
+				formData
+			);
 
-		// store images in firesore
+			if (data) {
+				setIsLoading(false);
+				toast.success('article created successfully');
+				navigate(`/featured/${data.type}`);
+			}
+		} catch (err) {
+			toast.error(err);
+		}
 	};
 
 	const upLoadToCloudnary = async (e, imageField = 'cover') => {
@@ -118,7 +131,7 @@ const Create = () => {
 					</Link>
 					<div className=' w-3/4 h-full mx-auto flex  items-center justify-center'>
 						<form
-							onSubmit={() => {}}
+							onSubmit={handleSubmit}
 							className='flex  pt-20 items-start flex-col min-h-[50vh] gap-5'
 						>
 							<div className='flex items-center justify-center lg:justify-between flex-col lg:flex-row gap-5'>
@@ -175,7 +188,7 @@ const Create = () => {
 									value={type}
 								>
 									<option>photography</option>
-									<option>video-editing</option>
+									<option>video-production</option>
 									<option>graphic-design</option>
 								</select>
 							</div>
