@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { FaFacebook, FaTwitter, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import Footerbanner from './footer-pop';
@@ -40,7 +39,6 @@ const Footer = () => {
 						<Link to='/contact'>contact</Link>
 					</li>
 				</ul>
-				`bx`
 			</article>
 			<hr className='w-[80vw] mx-auto my-5 bg-yellow-700 ' />
 			<section className='my-5'>
@@ -78,7 +76,7 @@ const Footer = () => {
 					</a>
 				</div>
 			</section>
-			san bleb 2021
+			san bleb 2021 <Link to='/login'>login</Link>
 		</footer>
 	);
 };
