@@ -28,9 +28,32 @@ handler.post('/create', async (req, res) => {
 });
 handler.get('/', async (req, res) => {
 	const type = req.query.type;
+	const pageSize = 10;
+	const page = Number(req.query.pageNumber) || 1;
+
+	// seach backend
+	const keyword = req.query.keyword
+		? {
+				name: {
+					$regex: req.query.keyword,
+					$options: 'i',
+				},
+				type: {
+					$regex: req.query.keyword,
+					$options: 'i',
+				},
+		  }
+		: {};
+	const count = await Article.countDocuments({ ...keyword });
+
 	try {
-		const articles = await Article.find({ type });
-		res.status(200).json(articles);
+		const articles = await Article.find({ type })
+			.limit(pageSize)
+			.skip(pageSize * (page - 1));
+
+		res
+			.status(200)
+			.json({ articles, page, pages: Math.ceil(count / pageSize) });
 	} catch (err) {
 		throw new Error(err.message);
 	}
