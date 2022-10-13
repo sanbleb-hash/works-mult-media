@@ -38,7 +38,7 @@ const Create = () => {
 			if (data) {
 				setIsLoading(false);
 				toast.success('article created successfully');
-				navigate(`https://works-mult-media.onrender.comfeatured/${data.type}`);
+				navigate(`https://works-mult-media.onrender.com/featured/${data.type}`);
 			}
 		} catch (err) {
 			toast.error(err);
@@ -53,7 +53,7 @@ const Create = () => {
 			const {
 				data: { signature, timestamp },
 			} = await axios.post(
-				'https://works-mult-media.onrender.comapi/v1/upload'
+				'https://works-mult-media.onrender.com/api/v1/upload'
 			);
 
 			const upload = e.target.files[0];

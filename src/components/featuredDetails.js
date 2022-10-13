@@ -19,7 +19,7 @@ const FeaturedDetails = () => {
 		try {
 			setLoading(true);
 			const { data } = await axios.get(
-				`https://works-mult-media.onrender.comapi/articles?type=${name}`
+				`https://works-mult-media.onrender.com/api/articles?type=${name}`
 			);
 
 			setArticles(data);
