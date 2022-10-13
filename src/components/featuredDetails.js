@@ -18,7 +18,9 @@ const FeaturedDetails = () => {
 	const fetchArticles = async () => {
 		try {
 			setLoading(true);
-			const { data } = await axios.get(`/api/articles?type=${name}`);
+			const { data } = await axios.get(
+				`https://works-medea.herokuapp.com/api/articles?type=${name}`
+			);
 
 			setArticles(data);
 			setLoading(false);
