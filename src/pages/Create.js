@@ -33,7 +33,10 @@ const Create = () => {
 		e.preventDefault();
 		try {
 			setIsLoading(true);
-			const { data } = await axios.post('/api/articles/create', formData);
+			const { data } = await axios.post(
+				'/https://works-mult-media.onrender.com/api/articles/create',
+				formData
+			);
 
 			if (data) {
 				setIsLoading(false);
