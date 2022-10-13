@@ -10,7 +10,7 @@ const DetailedPage = ({ cancel, type }) => {
 		'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cGhvdG9ncmFwaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60';
 
 	return (
-		<div className=' absolute  h-screen inset-0 rounded-md bg-gray-900 '>
+		<div className=' absolute top-0 h-screen -left-14 -right-14 rounded-md bg-gray-900 shadow-lg shadow-gray-400 '>
 			<div className='flex w-full items-center pb-3 bg-white/60 justify-between'>
 				{loading && (
 					<AiOutlineLoading3Quarters className=' self-center text-white text-5xl' />
