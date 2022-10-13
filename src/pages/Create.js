@@ -41,7 +41,7 @@ const Create = () => {
 			if (data) {
 				setIsLoading(false);
 				toast.success('article created successfully');
-				navigate(`https://works-mult-media.onrender.com/featured/${data.type}`);
+				navigate(`/featured/${data.type}`);
 			}
 		} catch (err) {
 			toast.error(err);
