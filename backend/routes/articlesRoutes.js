@@ -23,7 +23,7 @@ handler.post('/create', async (req, res) => {
 			res.status(201).json(newArticle);
 		}
 	} catch (err) {
-		throw new Error(err);
+		throw new Error(err.message);
 	}
 });
 handler.get('/', async (req, res) => {

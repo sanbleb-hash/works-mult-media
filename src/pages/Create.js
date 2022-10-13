@@ -38,11 +38,9 @@ const Create = () => {
 				formData
 			);
 
-			if (data) {
-				setIsLoading(false);
-				toast.success('article created successfully');
-				navigate(`/featured/${data.type}`);
-			}
+			setIsLoading(false);
+			toast.success('article created successfully');
+			navigate(`/featured/${data.type}`);
 		} catch (err) {
 			toast.error(err);
 		}
