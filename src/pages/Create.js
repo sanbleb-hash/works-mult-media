@@ -34,7 +34,7 @@ const Create = () => {
 		try {
 			setIsLoading(true);
 			const { data } = await axios.post(
-				'/https://works-mult-media.onrender.com/api/articles/create',
+				'https://works-mult-media.onrender.com/api/articles/create',
 				formData
 			);
 
