@@ -33,10 +33,7 @@ const Create = () => {
 		e.preventDefault();
 		try {
 			setIsLoading(true);
-			const { data } = await axios.post(
-				'http://localhost:5000/api/articles/create',
-				formData
-			);
+			const { data } = await axios.post('/api/articles/create', formData);
 
 			if (data) {
 				setIsLoading(false);
@@ -55,7 +52,7 @@ const Create = () => {
 			setShowUpLoad(true);
 			const {
 				data: { signature, timestamp },
-			} = await axios.post('http://localhost:5000/api/v1/upload');
+			} = await axios.post('/api/v1/upload');
 
 			const upload = e.target.files[0];
 			const formInput = new FormData();
