@@ -38,7 +38,7 @@ const Create = () => {
 			if (data) {
 				setIsLoading(false);
 				toast.success('article created successfully');
-				navigate(`https://works-medea.herokuapp.com/featured/${data.type}`);
+				navigate(`https://works-mult-media.onrender.comfeatured/${data.type}`);
 			}
 		} catch (err) {
 			toast.error(err);
@@ -52,7 +52,9 @@ const Create = () => {
 			setShowUpLoad(true);
 			const {
 				data: { signature, timestamp },
-			} = await axios.post('https://works-medea.herokuapp.com/api/v1/upload');
+			} = await axios.post(
+				'https://works-mult-media.onrender.comapi/v1/upload'
+			);
 
 			const upload = e.target.files[0];
 			const formInput = new FormData();
