@@ -75,7 +75,7 @@ const Create = () => {
 				...formData,
 				cover: { photo: data.secure_url, public_id: data.public_id },
 			});
-			console.log(data);
+
 			toast.success('File uploaded successfully');
 		} catch (err) {
 			toast.error({ err });
