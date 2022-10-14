@@ -34,7 +34,7 @@ const Create = () => {
 		try {
 			setIsLoading(true);
 			const { data } = await axios.post(
-				'https://works-mult-media.onrender.com/api/articles/create',
+				`${process.env.REACT_APP_API_ROUTE}/api/articles/create`,
 				formData
 			);
 
@@ -53,9 +53,7 @@ const Create = () => {
 			setShowUpLoad(true);
 			const {
 				data: { signature, timestamp },
-			} = await axios.post(
-				'https://works-mult-media.onrender.com/api/v1/upload'
-			);
+			} = await axios.post(`${process.env.REACT_APP_API_ROUTE}/api/v1/upload`);
 
 			const upload = e.target.files[0];
 			const formInput = new FormData();

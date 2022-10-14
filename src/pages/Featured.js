@@ -16,7 +16,7 @@ export const Featured = () => {
 			try {
 				setLoading(true);
 				const { data } = await axios.get(
-					`https://works-mult-media.onrender.com/api/articles?type=${name}`
+					`${process.env.REACT_APP_API_ROUTE}/api/articles?type=${name}`
 				);
 
 				dispatch({ type: 'ARTICLES_PAYLOAD', payload: data });

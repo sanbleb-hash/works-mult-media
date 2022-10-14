@@ -9,6 +9,9 @@ const INITIAl_STATE = {
 	articleID: localStorage.getItem('article')
 		? JSON.parse(localStorage.getItem('article'))
 		: null,
+	articles: localStorage.getItem('articles')
+		? JSON.parse(localStorage.getItem('articles'))
+		: [],
 	loading: false,
 	error: null,
 };
@@ -43,6 +46,12 @@ const reducer = (state, action) => {
 				...state,
 				isLoading: false,
 				articleID: action.payload,
+			};
+		case 'ARTICLES_PAYLOAD':
+			return {
+				...state,
+				isLoading: false,
+				articles: action.payload,
 			};
 		default:
 			return state;

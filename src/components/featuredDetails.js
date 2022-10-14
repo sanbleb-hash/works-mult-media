@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { articleContext } from '../utils/store';
 import DetailedPage from './detailedPage';
@@ -20,9 +20,11 @@ const FeaturedDetails = () => {
 
 	let image =
 		'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cGhvdG9ncmFwaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60';
-
-	if (loading) <h3 className='text-center text-orange-500'>loading...</h3>;
-	console.log(articles);
+	useEffect(() => {
+		if (articles) {
+			setLoading(false);
+		}
+	}, [articles]);
 
 	return (
 		<section className='text-white min-h-[70vh] w-[80vw] mx-auto bg-gradient-to-r  from-white to-yellow-200 flex flex-between flex-col gap-10 p-5  relative  '>
