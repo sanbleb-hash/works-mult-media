@@ -47,7 +47,7 @@ const FeaturedDetails = () => {
 
 					<article className='mt-6 flex flex-wrap items-center justify-center md:justify-start gap-3 '>
 						{articles?.length < 1 ? (
-							<p className=' self-center text-2xl'>
+							<p className=' self-center text-2xl text-gray-600'>
 								{' '}
 								nothing to preview yet. 🤦‍♂️{' '}
 							</p>
