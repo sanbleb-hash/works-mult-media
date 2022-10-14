@@ -1,53 +1,58 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import DetailedPage from './detailedPage';
-import { articleContext } from '../utils/store';
 import { toast } from 'react-toastify';
+import { Link, useParams } from 'react-router-dom';
+import { articleContext } from '../utils/store';
+import DetailedPage from './detailedPage';
+import Pagenate from './pagenate';
 
 import Loader from './loader';
 import axios from 'axios';
-import { FaPlay } from 'react-icons/fa';
+import { FaArrowAltCircleLeft, FaPlay } from 'react-icons/fa';
 
 const FeaturedDetails = () => {
 	const { name } = useParams();
 	const [showTitle] = useState(false);
 	const [showDetailed, setShowDetailed] = useState(false);
-	const [articles, setArticles] = useState([]);
+
 	const [loading, setLoading] = useState(true);
-
-	const fetchArticles = async () => {
-		try {
-			setLoading(true);
-			const { data } = await axios.get(
-				`https://works-mult-media.onrender.com/api/articles?type=${name}`
-			);
-
-			setArticles(data);
-			setLoading(false);
-		} catch (err) {
-			toast.error(err);
-		}
-	};
+	const { dispatch } = useContext(articleContext);
+	const [articles, setArticles] = useState([]);
 
 	useEffect(() => {
+		const fetchArticles = async () => {
+			try {
+				setLoading(true);
+				const { data } = await axios.get(
+					`https://works-mult-media.onrender.com/api/articles?type=${name}`
+				);
+
+				setLoading(false);
+				setArticles(data);
+				dispatch({ type: 'ARTICLES_PAYLOAD', payload: data });
+			} catch (err) {
+				toast.error(err);
+			}
+		};
 		fetchArticles();
-		// eslint-disable-next-line
-	}, []);
+	}, [name, dispatch]);
 
 	let image =
 		'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cGhvdG9ncmFwaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60';
 
-	const { dispatch } = useContext(articleContext);
 	if (loading) <h3 className='text-center text-orange-500'>loading...</h3>;
+	console.log(articles);
 
 	return (
-		<section className='text-white min-h-[70vh] w-[80vw] mx-auto  relative  '>
+		<section className='text-white min-h-[70vh] w-[80vw] mx-auto bg-gradient-to-r from-gray-500 from-white to-yellow-200 flex flex-between flex-col gap-10 p-5  relative  '>
+			<Link to='/'>
+				<FaArrowAltCircleLeft fill='gray' size={32} />
+			</Link>
 			{loading ? (
 				<Loader />
 			) : (
 				<>
 					<div className=' flex  items-center justify-center flex-col '>
-						<div className='w-[80vw] min-h-[100px] bg-gradient-to-r from-yellow-500 via-yellow-200 to-yellow-700 py-3 mt-3 rounded-md shadow-2xl px-5'>
+						<div className='min-w-[75vw] min-h-[100px] bg-gradient-to-r from-yellow-500 via-yellow-200 to-yellow-700 py-3 mt-3 rounded-md shadow-2xl px-5'>
 							<h1 className='text-3xl md:text-4xl  '>{name}</h1>
 							<p className='px-3 pt-2'>
 								we are detail oriented team and aim to provide maximum appeal to
@@ -57,7 +62,7 @@ const FeaturedDetails = () => {
 					</div>
 
 					<article className='mt-6 flex flex-wrap items-center justify-center md:justify-start gap-3 '>
-						{articles.length < 1 ? (
+						{articles?.length < 1 ? (
 							<p className=' self-center text-2xl'>
 								{' '}
 								nothing to preview yet. 🤦‍♂️{' '}
@@ -103,6 +108,7 @@ const FeaturedDetails = () => {
 					)}
 				</>
 			)}
+			<Pagenate articles={articles} />
 		</section>
 	);
 };
