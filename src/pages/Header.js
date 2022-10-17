@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import Skipper from '../components/carousel';
+import Loader from '../components/loader';
 
 const Header = () => {
 	const navigate = useNavigate();
@@ -12,14 +14,14 @@ const Header = () => {
 		const carousel = async () => {
 			setloading(true);
 			const { data } = await axios.get(
-				'http://localhost:5000/api/articles/all'
+				`${process.env.REACT_APP_API_ROUTE}/all`
 			);
 			setloading(false);
 			setCarouselData(data);
 		};
 		carousel();
 	}, []);
-	console.log(carouselData);
+
 	return (
 		<>
 			<header className='h-screen w-screen before:z-10  relative pt-[20vh] before:absolute before:bg-purple-900/40 before:inset-0 overflow-hidden z-30  '>
@@ -63,7 +65,7 @@ const Header = () => {
 					</button>
 				</div>
 			</header>
-			<Skipper data={carouselData} />
+			{loading ? <Loader /> : <Skipper data={carouselData} />}
 		</>
 	);
 };

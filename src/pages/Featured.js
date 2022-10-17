@@ -20,7 +20,7 @@ export const Featured = () => {
 				);
 
 				dispatch({ type: 'ARTICLES_PAYLOAD', payload: data });
-				console.log(data);
+
 				setLoading(false);
 			} catch (err) {
 				toast.error(err);

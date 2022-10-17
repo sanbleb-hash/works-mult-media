@@ -1,11 +1,15 @@
 import React from 'react';
-import { RiLoader5Line } from 'react-icons/ri';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const Loader = () => {
 	return (
-		<div className='flex justify-center items-center  animate-spin h-screen w-screen'>
-			<RiLoader5Line className='text-5xl text-blue-300' />
-		</div>
+		<span className='w-[80vw] h-[40vh] flex items-center justify-center mx-auto '>
+			<AiOutlineLoading3Quarters
+				fill='purple'
+				size={32}
+				className=' animate-spin'
+			/>
+		</span>
 	);
 };
 
