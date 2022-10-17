@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+
 import { useNavigate } from 'react-router-dom';
 import Skipper from '../components/carousel';
 import Loader from '../components/loader';
@@ -14,9 +14,10 @@ const Header = () => {
 		const carousel = async () => {
 			setloading(true);
 			const { data } = await axios.get(
-				`${process.env.REACT_APP_API_ROUTE}/all`
+				`${process.env.REACT_APP_API_ROUTE}/api/articles/all`
 			);
 			setloading(false);
+			console.log(data);
 			setCarouselData(data);
 		};
 		carousel();
