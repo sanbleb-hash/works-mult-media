@@ -27,17 +27,30 @@ handler.post('/create', async (req, res) => {
 	}
 });
 handler.get('/', async (req, res) => {
-	const type = req.query.type;
+	const match = {
+		type: req.query.type,
+		page: Number(req.query.pageNumber) || 1,
+		pageSize: 3,
+	};
+
 	try {
-		const articles = await Article.find({ type });
-		res.status(200).json(articles);
+		const count = await Article.countDocuments({
+			...match.type,
+		});
+		const pages = Math.round(count / match.pageSize);
+		const articles = await Article.find({
+			type: match.type,
+		})
+			.limit(match.pageSize)
+			.skip(match.pageSize * (match.page - 1));
+		res.status(200).json({ page: match.page, pages, articles });
 	} catch (err) {
 		throw new Error(err.message);
 	}
 });
 handler.get('/:id', async (req, res) => {
 	try {
-		const article = await Article.findById(req.params.id);
+		const article = await Article.findById(req.params._id);
 		if (!article) {
 			return res.status(404).json({ message: 'Article not found' });
 		}
