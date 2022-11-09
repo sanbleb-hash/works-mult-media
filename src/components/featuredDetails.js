@@ -46,13 +46,13 @@ const FeaturedDetails = () => {
 					</div>
 
 					<article className='mt-6 flex flex-wrap items-center justify-center md:justify-start gap-3 '>
-						{articles?.length < 1 ? (
+						{articles.articles?.length < 1 ? (
 							<p className=' self-center text-2xl text-gray-600'>
 								{' '}
 								nothing to preview yet. 🤦‍♂️{' '}
 							</p>
 						) : (
-							articles?.map((article) => (
+							articles.articles?.map((article) => (
 								<div
 									key={article._id}
 									className=' min-w-[350px] h-[200px] shadow-lg shadow-gray-900  rounded-md overflow-hidden relative '
@@ -92,7 +92,7 @@ const FeaturedDetails = () => {
 					)}
 				</>
 			)}
-			<Pagenate articles={articles} />
+			<Pagenate articles={articles} name={name} />
 		</section>
 	);
 };
