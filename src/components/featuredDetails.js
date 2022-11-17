@@ -24,7 +24,6 @@ const FeaturedDetails = () => {
 		if (articles) {
 			setLoading(false);
 		}
-		console.log(articles);
 	}, [articles]);
 
 	return (
