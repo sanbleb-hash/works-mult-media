@@ -4,12 +4,13 @@ import Footerbanner from './footer-pop';
 
 const Footer = () => {
 	const page = useLocation();
+	const year = new Date();
 
 	return (
 		<footer
 			className={
 				page.pathname === '/contact'
-					? ' text-white bg-indigo-400 w-screen min-h-[100px] text-center my-auto mx-auto shadow-xl pt-16'
+					? ' text-white bg-indigo-400 w-screen min-h-[100px] text-center my-auto mx-auto shadow-xl pt-16 relative'
 					: ' text-white bg-indigo-400 w-screen min-h-[100px] text-center my-auto mx-auto shadow-xl pt-16 relative'
 			}
 		>
@@ -76,7 +77,23 @@ const Footer = () => {
 					</a>
 				</div>
 			</section>
-			san bleb 2021 <Link to='/login'>login</Link>
+
+			<Link
+				className=' text-xs
+         '
+				to='/login'
+			>
+				Works Mult-Media &copy; {year.getFullYear()}
+			</Link>
+			<a
+				href='https://app-phi-indol.vercel.app/'
+				target='_blank'
+				ref='noreferrer'
+			>
+				{' '}
+				className=' text-[.5rem] absolute bottom-3 left-3 text-gray-300'>
+				sanbleb.dev 2021{' '}
+			</a>
 		</footer>
 	);
 };

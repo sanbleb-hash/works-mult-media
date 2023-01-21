@@ -36,7 +36,7 @@ const Header = () => {
 					loop
 					autoPlay
 					muted
-					className=' absolute inset-0 object-cover h-full md:hidden  '
+					className=' absolute inset-0 w-full object-cover h-full md:hidden  '
 				></video>
 				<div className='z-40 flex flex-col   justify-end top-[14vh] absolute inset-5 bottom-32 sm:top-24 sm:bottom-[7rem] w-[85vw] sm:w-1/2 l-7  sm:left-[18rem] lg:left-[30rem] md:left-[25rem]  px-4  md:px-14 py-6 shadow-2xl  text-gray-400 my-auto bg-slate-800/60  shadow-gray-400 backdrop-opacity-30 '>
 					<h3 className='md:text-4xl text-2xl py-4   text-end '>
@@ -47,10 +47,10 @@ const Header = () => {
 							<h3 className='md:text-4xl text-2xl text-end '>home</h3>
 							<h3 className='md:text-4xl text-2xl text-end  '>
 								{' '}
-								bussiness <span className='text-pink-900'>,</span>
+								bussiness <span className='text-pink-300'>,</span>
 							</h3>
 							<h3 className='md:text-4xl  text-2xl text-end '>
-								personal <span className='text-pink-900'>&</span>
+								personal <span className='text-pink-300'>&</span>
 							</h3>
 							<h3 className='md:text-4xl  text-2xl text-end '>professional</h3>
 						</span>
