@@ -88,10 +88,10 @@ const Footer = () => {
 			<a
 				href='https://app-phi-indol.vercel.app/'
 				target='_blank'
-				ref='noreferrer'
+				ref='noopener'
+				rel='noreferrer'
+				className=' text-[.5rem] absolute bottom-3 left-3 text-gray-300'
 			>
-				{' '}
-				className=' text-[.5rem] absolute bottom-3 left-3 text-gray-300'>
 				sanbleb.dev 2021{' '}
 			</a>
 		</footer>
