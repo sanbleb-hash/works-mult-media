@@ -25,13 +25,20 @@ const Header = () => {
 
 	return (
 		<>
-			<header className='h-screen w-screen before:z-10  relative pt-[20vh] before:absolute before:bg-purple-900/40 before:inset-0 overflow-hidden z-30  '>
+			<header className='h-screen w-screen before:z-10  relative pt-[20vh] before:absolute before:bg-purple-900/60  before:inset-0 overflow-hidden z-30  '>
 				<img
 					src='/images/hero-img.jpg'
 					alt='burner'
-					className='absolute inset-0 z-0 '
+					className='absolute inset-0 z-0 md:inline-block hidden '
 				/>
-				<div className='z-40 flex flex-col   justify-end top-[14vh] absolute inset-5 bottom-32 sm:top-24 sm:bottom-[7rem] w-[85vw] sm:w-1/2 l-7  sm:left-[18rem] lg:left-[30rem] md:left-[25rem]  px-4  md:px-14 py-6 shadow-2xl  text-gray-100 my-auto bg-indigo-800/40'>
+				<video
+					src='/images/hero'
+					loop
+					autoPlay
+					muted
+					className=' absolute inset-0 object-cover h-full md:hidden  '
+				></video>
+				<div className='z-40 flex flex-col   justify-end top-[14vh] absolute inset-5 bottom-32 sm:top-24 sm:bottom-[7rem] w-[85vw] sm:w-1/2 l-7  sm:left-[18rem] lg:left-[30rem] md:left-[25rem]  px-4  md:px-14 py-6 shadow-2xl  text-gray-400 my-auto bg-slate-800/60  shadow-gray-400 backdrop-opacity-30 '>
 					<h3 className='md:text-4xl text-2xl py-4   text-end '>
 						we are experts in{' '}
 					</h3>
@@ -52,14 +59,14 @@ const Header = () => {
 						graphic designs
 						<span className='block'>& </span>video production
 					</h3>
-					<p className='z-50'>
+					<p className='z-50 hidden md:block'>
 						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
 						commodo ligula eget dolor. Aenean massa. Cum sociis natoque
 						penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 						Donec quam
 					</p>
 					<button
-						className=' bg-yellow-600/60 text-lg md:text-xl  px-3 md:px-6 py-1 md:mt-9 mt-3 hover:text-gray-300 hover:bg-opacity-90 transition-all delay-75 ease-in active:bg-yellow-800 capitalize font-semibold '
+						className=' bg-yellow-700/70 text-lg md:text-xl  px-3 md:px-6 py-1 md:mt-9 mt-3 hover:text-gray-300 hover:bg-opacity-90 transition-all delay-75 ease-in active:bg-yellow-800 capitalize font-semibold shadow-lg rounded-md '
 						onClick={() => navigate('/contact')}
 					>
 						get in touch
