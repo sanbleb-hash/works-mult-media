@@ -71,6 +71,7 @@ const Create = () => {
 				...formData,
 				cover: { photo: data.secure_url, public_id: data.public_id },
 			});
+			setShowUpLoad(false);
 
 			toast.success('File uploaded successfully');
 		} catch (err) {
@@ -99,7 +100,8 @@ const Create = () => {
 	}, [auth]);
 
 	return (
-		<section className='p-8 pt-20 min-h-[70vh]'>
+		<section className='p-8 pt-20 min-h-[70vh] relative'>
+			{showUpload ? <Loader /> : ''}
 			{isLoading ? (
 				<Loader />
 			) : (

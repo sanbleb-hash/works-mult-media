@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaFacebook, FaTwitter, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 
 const Modal = () => {
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<div className='absolute w-screen h-screen bg-indigo-800/50 top-[10vh] -left-16 z-50'>
 			<div className=' flex items-start justify-between  w-2/3 bg-indigo-900 py-10 h-full'>

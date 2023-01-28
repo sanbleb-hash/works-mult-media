@@ -26,6 +26,10 @@ const FeaturedDetails = () => {
 		}
 	}, [articles]);
 
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<section className='text-white min-h-[70vh] w-[90vw] md:w-[80vw] mx-auto bg-gradient-to-r  from-white to-yellow-200 flex flex-between flex-col gap-10 p-5  relative  '>
 			<Link to='/'>

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import FeaturedDetails from '../components/featuredDetails';
+import Loader from '../components/loader';
 import { articleContext } from '../utils/store';
 
 export const Featured = () => {
@@ -29,10 +30,10 @@ export const Featured = () => {
 		fetchArticles();
 	}, [name, dispatch]);
 
-	if (loading) <h3 className='text-center text-orange-500'>loading...</h3>;
+	if (loading) return <Loader />;
 
 	return (
-		<section className=' w-screen pt-[10vh] text-white min-h-[100vh] pb-[250px]  bg-black text-center '>
+		<section className=' w-screen pt-[10vh] text-white min-h-[100vh] pb-[250px]  bg-black text-center relative '>
 			<FeaturedDetails />
 		</section>
 	);
